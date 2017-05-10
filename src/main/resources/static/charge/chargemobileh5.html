@@ -103,7 +103,7 @@
                 for(var i=0; i<data.length; i++){
                     result +='<a class="weui-cell weui-cell_access" href="javascript:void(0)" onclick="jump('+data[i].id+')">' +
                         '<div class="weui-cell__hd">'+tipImage+'</div>'+
-                        '<div class="weui-cell__bd"><p>'+data[i].userName+'</p></div><div class="weui-cell__ft"></div></a>';
+                        '<div class="weui-cell__bd"><p>'+data[i].userName+'&nbsp;&nbsp;&nbsp;欠费金额&nbsp;'+data[i].amount+'</p></div><div class="weui-cell__ft"></div></a>';
                 }
                 $('.js-blog-list').append(result);
                 /*******************************************/
