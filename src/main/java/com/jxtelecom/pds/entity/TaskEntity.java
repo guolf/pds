@@ -28,12 +28,15 @@ public class TaskEntity implements Serializable {
 	//
 	private String remark;
 
+	// 欠费用户名
 	private String userName;
 
+	// 任务创建人
 	private String createUserName;
-
+	// 客户经理工号
 	private String accountManagerNo;
 
+	// 客户经理姓名
 	private String accountManagerName;
 
 	public String getAccountManagerNo() {
@@ -131,5 +134,11 @@ public class TaskEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+
+	public TaskEntity convert(ChargeOverdueEntity entity){
+		this.setChargeId(entity.getId());
+		this.setCreateDate(new Date());
+		return this;
 	}
 }

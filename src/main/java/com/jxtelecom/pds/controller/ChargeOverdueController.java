@@ -2,7 +2,9 @@ package com.jxtelecom.pds.controller;
 
 import com.jxtelecom.pds.admin.AbstractController;
 import com.jxtelecom.pds.entity.ChargeOverdueEntity;
+import com.jxtelecom.pds.entity.TaskEntity;
 import com.jxtelecom.pds.service.ChargeOverdueService;
+import com.jxtelecom.pds.service.TaskService;
 import com.jxtelecom.pds.utils.PageUtils;
 import com.jxtelecom.pds.utils.Query;
 import com.jxtelecom.pds.utils.R;
@@ -30,6 +32,9 @@ import java.util.Map;
 public class ChargeOverdueController extends AbstractController {
     @Autowired
     private ChargeOverdueService chargeOverdueService;
+
+    @Autowired
+    private TaskService taskService;
 
     /**
      * 列表
@@ -85,9 +90,17 @@ public class ChargeOverdueController extends AbstractController {
             ImportExcel ei = new ImportExcel(file, 0, 1);
             List<ChargeOverdueEntity> list = ei.getDataList(ChargeOverdueEntity.class);
             for (ChargeOverdueEntity user : list) {
+                // todo 待优化，使用批量插入
+                // 导入欠费清单
                 user.setCreateDate(new Date());
                 user.setCreateUserId(getUserId());
                 chargeOverdueService.save(user);
+
+                // 生成任务
+                TaskEntity task = new TaskEntity().convert(user);
+                task.setCreateUserId(getUserId());
+                taskService.save(task);
+
             }
 
             return R.ok();
