@@ -22,6 +22,9 @@
 
 	<select id="queryList" resultType="com.jxtelecom.pds.entity.ChargeOverdueEntity">
 		select * from tb_charge_overdue
+		<where>
+
+		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}

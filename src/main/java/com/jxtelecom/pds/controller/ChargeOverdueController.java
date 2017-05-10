@@ -8,14 +8,11 @@ import com.jxtelecom.pds.utils.Query;
 import com.jxtelecom.pds.utils.R;
 import com.jxtelecom.pds.utils.RRException;
 import com.jxtelecom.pds.utils.excel.ImportExcel;
-import com.jxtelecom.pds.utils.validator.ValidatorUtils;
-import com.jxtelecom.pds.utils.validator.group.AddGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +85,6 @@ public class ChargeOverdueController extends AbstractController {
             ImportExcel ei = new ImportExcel(file, 0, 1);
             List<ChargeOverdueEntity> list = ei.getDataList(ChargeOverdueEntity.class);
             for (ChargeOverdueEntity user : list) {
-//                ValidatorUtils.validateEntity(user, AddGroup.class);
                 user.setCreateDate(new Date());
                 user.setCreateUserId(getUserId());
                 chargeOverdueService.save(user);
