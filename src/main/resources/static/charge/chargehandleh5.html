@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+    <script src="../public/libs/jquery.min.js"></script>
+</head>
+<body>
+<!-- 使用 -->
+<div class="weui-cells__title">表单</div>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+        <div class="weui-cell__bd">
+            <label id="userName"></label>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
+        <div class="weui-cell__bd">
+            <label id="userCode"></label>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd" ><label class="weui-label">欠费金额</label></div>
+        <div class="weui-cell__bd">
+            <label class="weui-label" id="amount"></label>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">欠费账期</label></div>
+        <div class="weui-cell__bd">
+            <label id="accountMonth"></label>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">用户地址</label></div>
+        <div class="weui-cell__bd">
+            <label id="address"></label>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">催缴结果</label></div>
+        <div class="weui-cell__bd">
+            <select class="weui-select" style="margin-left:-5px;" name="result" id="result">
+                <option value="1">催缴成功</option>
+                <option value="2">用户拒绝</option>
+                <option value="3">未联系上</option>
+                <option value="4">其他</option>
+            </select>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">备注</label></div>
+        <div class="weui-cell__bd">
+            <textarea  id="remark" class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+            <div class="weui-textarea-counter"><span>0</span>/200</div>
+        </div>
+    </div>
+    <div class="button-sp-area" style="text-align:center; margin:0 auto;">
+        <a href="javascript:;" onclick="submitInfo();" class="weui-btn weui-btn_mini weui-btn_primary">成功</a>
+        &nbsp; &nbsp; &nbsp; &nbsp; 
+        <a href="javascript:;" onclick="submitInfo();"class="weui-btn weui-btn_mini weui-btn_warn">失败</a>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="javascript:history.back(-1);" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var id=localStorage.id;
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: '../task/info/'+id,
+            dataType: 'json',
+            success: function(reponse){
+                var data = reponse.task;
+                $("#userName").text(data.userName);
+                $("#userCode").text(data.userCode);
+                $("#amount").text(data.amount);
+                $("#accountMonth").text(data.accountMonth);
+                $("#address").text(data.address);
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+            }
+        });
+        
+    });
+    function submitInfo(){
+        var obj=new Object();
+        obj.id=id;
+        obj.remark=$("#remark").val();
+        obj.result=$("#result").val();
+        $.ajax({
+            type: 'POST',
+            url: '../task/update',
+            data: JSON.stringify(obj),
+            headers : {
+                'Content-Type' : 'application/json;charset=utf-8'
+            },
+            success: function(reponse){
+
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+            }
+        })
+
+
+    }
+</script>
+</html>
