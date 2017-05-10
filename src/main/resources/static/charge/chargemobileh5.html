@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="weui_panel weui_panel_access">
-            <div class="weui_panel_hd">任务列表</div>
+          <!--  <div class="weui_panel_hd">任务列表</div>-->
             <div class="weui_panel_bd js-blog-list">
 
             </div>
@@ -58,49 +58,42 @@
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
         /*初始化*/
-        var counter = 0; /*计数器*/
-        var pageStart = 0; /*offset*/
+        var counter = 1; /*第几页*/
         var pageSize = 4; /*size*/
         /*首次加载*/
-        getData(pageStart, pageSize);
+        getData(counter, pageSize);
         /*监听加载更多*/
         $(document).on('click', '.js-load-more', function(){
             counter ++;
-            pageStart = counter * pageSize;
-
-            getData(pageStart, pageSize);
+            getData(counter, pageSize);
         });
     });
-    function getData(offset,size){
+    function jump(id){
+        alert(id);
+        location.href="../charge/chargehandleh5.html";
+    }
+    function getData(page,size){
         $.ajax({
-            type: 'GET',
-            url: '../chargeoverdue/listjson',
+            type: 'POST',
+            url: '../chargeoverdue/list',
+            data:{page:page,limit:size},
             dataType: 'json',
             success: function(reponse){
-                var data = reponse.list;
-                var sum = reponse.list.length;
+                var data = reponse.page.list;
+                var totalPage = reponse.page.totalPage;
+                var currPage=reponse.page.currPage;
+                console.log(totalPage+","+currPage);
                 var result = '';
-                /****业务逻辑块：实现拼接html内容并append到页面*********/
-                /*如果剩下的记录数不够分页，就让分页数取剩下的记录数
-                 * 例如分页数是5，只剩2条，则只取2条
-                 * 实际MySQL查询时不写这个不会有问题
-                 */
-                if(sum - offset < size ){
-                    size = sum - offset;
-                }
                 /*使用for循环模拟SQL里的limit(offset,size)*/
-                for(var i=offset; i< (offset+size); i++){
-                    result +='<a class="weui-cell weui-cell_access" href="javascript:;">' +
+                for(var i=0; i<data.length; i++){
+                    result +='<a class="weui-cell weui-cell_access" href="javascript:void(0)" onclick="jump('+data[i].id+')">' +
                         '<div class="weui-cell__hd"><i class="weui-icon-warn"></i></div>'+
-                        '<div class="weui-cell__bd"><p>'+data[i].name+'</p></div><div class="weui-cell__ft"></div></a>';
+                        '<div class="weui-cell__bd"><p>'+data[i].userName+'</p></div><div class="weui-cell__ft"></div></a>';
                 }
-
                 $('.js-blog-list').append(result);
-
                 /*******************************************/
-
                 /*隐藏more按钮*/
-                if ( (offset + size) >= sum){
+                if ( currPage >= totalPage){
                     $(".js-load-more").hide();
                 }else{
                     $(".js-load-more").show();
@@ -110,9 +103,6 @@
                 alert('Ajax error!');
             }
         });
-        /**
-         *
-         */
     }
 </script>
 </body>
