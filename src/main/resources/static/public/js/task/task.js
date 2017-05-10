@@ -9,7 +9,23 @@ $(function () {
 			{ label: '欠费人', name: 'userName', index: 'user_name', width: 80 },
             { label: '客户经理工号', name: 'accountManagerNo', index: 'account_manager_no', width: 80 },
             { label: '客户经理', name: 'accountManagerName', index: 'account_manager_name', width: 80 },
-			{ label: '任务状态', name: 'result', index: 'result', width: 80 },
+			{ label: '任务状态', name: 'result', index: 'result', width: 80 ,formatter: function(value, options, row){
+                if(value == 0){
+                    return '<span class="label label-danger">待处理</span>';
+                }
+                else if(value == 1){
+                    return '<span class="label label-success">成功</span>';
+                }
+                else if(value == 2){
+                    return '<span class="label label-info">用户拒绝</span>';
+                }
+                else if(value == 3){
+                    return '<span class="label label-warning">未联系上</span>';
+                }
+                else if(value == 4){
+                    return '<span class="label label-primary">其它</span>';
+                }
+            }},
 			{ label: '备注', name: 'remark', index: 'remark', width: 80 }
         ],
 		viewrecords: true,

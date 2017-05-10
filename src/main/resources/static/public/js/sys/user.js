@@ -4,10 +4,11 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true},
-            {label: '用户名', name: 'username', width: 75},
+            {label: '用户登陆名', name: 'username', width: 75},
             {label: '邮箱', name: 'email', width: 90},
             {label: '手机号', name: 'mobile', width: 100},
             {label: '工号', name: 'accountManagerNo', width: 100},
+            {label: '用户名', name: 'accountManagerName', width: 75},
             {
                 label: '状态', name: 'status', width: 80, formatter: function (value, options, row) {
                 return value === 0 ?
