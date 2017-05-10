@@ -68,6 +68,7 @@ public class SysUserEntity implements Serializable {
 	 */
 	private Date createTime;
 
+	private String accountManagerNo;
 	/**
 	 * 设置：
 	 * @param userId 
@@ -195,5 +196,12 @@ public class SysUserEntity implements Serializable {
 	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
 	}
-	
+
+	public String getAccountManagerNo() {
+		return accountManagerNo;
+	}
+
+	public void setAccountManagerNo(String accountManagerNo) {
+		this.accountManagerNo = accountManagerNo;
+	}
 }
