@@ -27,7 +27,7 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 用户名
 	 */
-	@NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+	@NotBlank(message="用户登陆名", groups = {AddGroup.class, UpdateGroup.class})
 	private String username;
 
 	/**
@@ -69,6 +69,10 @@ public class SysUserEntity implements Serializable {
 	private Date createTime;
 
 	private String accountManagerNo;
+
+	@NotBlank(message="用户姓名", groups = {AddGroup.class, UpdateGroup.class})
+	private String accountManagerName;
+
 	/**
 	 * 设置：
 	 * @param userId 
@@ -203,5 +207,13 @@ public class SysUserEntity implements Serializable {
 
 	public void setAccountManagerNo(String accountManagerNo) {
 		this.accountManagerNo = accountManagerNo;
+	}
+
+	public String getAccountManagerName() {
+		return accountManagerName;
+	}
+
+	public void setAccountManagerName(String accountManagerName) {
+		this.accountManagerName = accountManagerName;
 	}
 }

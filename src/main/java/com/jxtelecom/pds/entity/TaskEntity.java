@@ -39,6 +39,58 @@ public class TaskEntity implements Serializable {
 	// 客户经理姓名
 	private String accountManagerName;
 
+	// 欠费金额
+	private String amount;
+
+	// 账期
+	private String accountMonth;
+
+	// 地址
+	private String address;
+
+	// 电话号码
+	private String userCode;
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getAccountMonth() {
+		return accountMonth;
+	}
+
+	public void setAccountMonth(String accountMonth) {
+		this.accountMonth = accountMonth;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+
+	public String getAccountManagerName() {
+		return accountManagerName;
+	}
+
+	public void setAccountManagerName(String accountManagerName) {
+		this.accountManagerName = accountManagerName;
+	}
+
 	public String getAccountManagerNo() {
 		return accountManagerNo;
 	}
@@ -139,6 +191,7 @@ public class TaskEntity implements Serializable {
 	public TaskEntity convert(ChargeOverdueEntity entity){
 		this.setChargeId(entity.getId());
 		this.setCreateDate(new Date());
+		this.setResult("0");
 		return this;
 	}
 }
