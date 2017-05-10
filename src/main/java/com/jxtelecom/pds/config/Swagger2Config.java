@@ -20,18 +20,17 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("io.renren.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.jxtelecom.pds.api"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("renren-security-boot使用Swagger2构建RESTful API")
-                .description("人人编程：http://www.renren.io")
-                .termsOfServiceUrl("http://www.renren.io")
-                .contact("人人开源")
-                .version("2.0")
+                .title("派单管理系统")
+                .description("派单管理系统  江西欢乐队")
+                .contact("派单管理系统")
+                .version("1.0")
                 .build();
     }
 
