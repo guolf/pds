@@ -16,6 +16,8 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
+        removeAbandonedTimeout: 180000
+        removeAbandoned: true
 
         # Druid 配置
         filters: stat,wall,log4j
