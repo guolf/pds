@@ -13,12 +13,8 @@
     <div class="page__bd">
         <div class="weui-tab">
             <div class="weui-navbar">
-                <div class="weui-navbar__item weui-bar__item_on">
-                    待办
-                </div>
-                <div class="weui-navbar__item">
-                    已完成
-                </div>
+                <div class="weui-navbar__item weui-bar__item_on">待办</div>
+                <div class="weui-navbar__item">已完成</div>
             </div>
             <div class="weui-tab__panel">
 
@@ -54,29 +50,48 @@
 </style>
 <script type="text/javascript">
     $(function(){
+        var status=0;
         $('.weui-navbar__item').on('click', function () {
+            var text=$(this).text();
+
+            if(text=='待办'){
+                status=0;
+                $('.js-blog-list').empty();
+                getData(counter, pageSize,status);
+            }else if(text=='已完成'){
+                status=1;
+                $('.js-blog-list').empty();
+                getData(counter, pageSize,status);
+            }
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
         /*初始化*/
         var counter = 1; /*第几页*/
         var pageSize = 4; /*size*/
         /*首次加载*/
-        getData(counter, pageSize);
+        getData(counter, pageSize,status);
         /*监听加载更多*/
         $(document).on('click', '.js-load-more', function(){
             counter ++;
-            getData(counter, pageSize);
+            getData(counter, pageSize,status);
         });
     });
     function jump(id){
-        alert(id);
+        localStorage.id=id;
         location.href="../charge/chargehandleh5.html";
     }
-    function getData(page,size){
+    function getData(page,size,status){
+        console.log("status==>"+status);
+        var tipImage="";
+        if(status==0){
+            tipImage='<i class="weui-icon-info-circle"></i>';
+        }else{
+            tipImage='<i class="weui-icon-success"></i>';
+        }
         $.ajax({
             type: 'POST',
-            url: '../chargeoverdue/list',
-            data:{page:page,limit:size},
+            url: '../task/list',
+            data:{page:page,limit:size,status:status,order:"createDate"},
             dataType: 'json',
             success: function(reponse){
                 var data = reponse.page.list;
@@ -87,7 +102,7 @@
                 /*使用for循环模拟SQL里的limit(offset,size)*/
                 for(var i=0; i<data.length; i++){
                     result +='<a class="weui-cell weui-cell_access" href="javascript:void(0)" onclick="jump('+data[i].id+')">' +
-                        '<div class="weui-cell__hd"><i class="weui-icon-warn"></i></div>'+
+                        '<div class="weui-cell__hd">'+tipImage+'</div>'+
                         '<div class="weui-cell__bd"><p>'+data[i].userName+'</p></div><div class="weui-cell__ft"></div></a>';
                 }
                 $('.js-blog-list').append(result);

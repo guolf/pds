@@ -7,6 +7,7 @@
     <title>WeUI</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+    <script src="../public/libs/jquery.min.js"></script>
 </head>
 <body>
 <!-- 使用 -->
@@ -15,7 +16,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
         <div class="weui-cell__bd">
-            <label class="weui-label">王小川</label>
+            <label id="userName">王小川</label>
         </div>
     </div>
     <div class="weui-cell">
@@ -33,7 +34,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">欠费时间</label></div>
         <div class="weui-cell__bd">
-            <label>2017-04-11 12:12:12</label>
+            <label id="">2017-04-11 12:12:12</label>
         </div>
     </div>
     <div class="weui-cell">
@@ -61,10 +62,43 @@
         </div>
     </div>
     <div class="button-sp-area" style="text-align:center; margin:0 auto;">
-        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">催缴成功</a>
+        <a href="javascript:;" onclick="submitInfo();" class="weui-btn weui-btn_mini weui-btn_primary">成功</a>
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">催缴失败</a>
+        <a href="javascript:;" onclick="submitInfo();"class="weui-btn weui-btn_mini weui-btn_warn">失败</a>
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    $(function () {
+        var id=localStorage.id;
+        $.ajax({
+            type: 'GET',
+            url: '../task/info/'+id,
+            dataType: 'json',
+            success: function(reponse){
+                var data = reponse.task;
+                
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+            }
+        });
+        function submitInfo(){
+           $.ajax({
+               type: 'POST',
+               url: '../task/update',
+               data:{},
+               success: function(reponse){
+                   
+               },
+               error: function(xhr, type){
+                   alert('Ajax error!');
+               }
+           })
+            
+            
+        }
+    });
+    
+</script>
 </html>
