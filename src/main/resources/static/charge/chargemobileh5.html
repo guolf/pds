@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+</head>
+<body>
+<div class="page">
+    <div class="page__bd">
+        <div class="weui-tab">
+            <div class="weui-navbar">
+                <div class="weui-navbar__item weui-bar__item_on">
+                    待办
+                </div>
+                <div class="weui-navbar__item">
+                    已完成
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+            </div>
+        </div>
+        <div class="weui_panel weui_panel_access">
+            <div class="weui_panel_hd">任务列表</div>
+            <div class="weui_panel_bd js-blog-list">
+
+            </div>
+        </div>
+        <div class="js-load-more">加载更多</div>
+    </div>
+</div>
+<script src="../public/libs/jquery.min.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<style>
+    .js-load-more{
+        padding:0 15px;
+        width:120px;
+        height:30px;
+        background-color:#D31733;
+        color:#fff;
+        line-height:30px;
+        text-align:center;
+        border-radius:5px;
+        margin:20px auto;
+        border:0 none;
+        font-size:16px;
+        display:none;/*默认不显示，ajax调用成功后才决定显示与否*/
+    }
+</style>
+<script type="text/javascript">
+    $(function(){
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+        });
+        /*初始化*/
+        var counter = 0; /*计数器*/
+        var pageStart = 0; /*offset*/
+        var pageSize = 4; /*size*/
+        /*首次加载*/
+        getData(pageStart, pageSize);
+        /*监听加载更多*/
+        $(document).on('click', '.js-load-more', function(){
+            counter ++;
+            pageStart = counter * pageSize;
+
+            getData(pageStart, pageSize);
+        });
+    });
+    function getData(offset,size){
+        $.ajax({
+            type: 'GET',
+            url: '../chargeoverdue/listjson',
+            dataType: 'json',
+            success: function(reponse){
+                var data = reponse.list;
+                var sum = reponse.list.length;
+                var result = '';
+                /****业务逻辑块：实现拼接html内容并append到页面*********/
+                /*如果剩下的记录数不够分页，就让分页数取剩下的记录数
+                 * 例如分页数是5，只剩2条，则只取2条
+                 * 实际MySQL查询时不写这个不会有问题
+                 */
+                if(sum - offset < size ){
+                    size = sum - offset;
+                }
+                /*使用for循环模拟SQL里的limit(offset,size)*/
+                for(var i=offset; i< (offset+size); i++){
+                    result +='<a class="weui-cell weui-cell_access" href="javascript:;">' +
+                        '<div class="weui-cell__hd"><i class="weui-icon-warn"></i></div>'+
+                        '<div class="weui-cell__bd"><p>'+data[i].name+'</p></div><div class="weui-cell__ft"></div></a>';
+                }
+
+                $('.js-blog-list').append(result);
+
+                /*******************************************/
+
+                /*隐藏more按钮*/
+                if ( (offset + size) >= sum){
+                    $(".js-load-more").hide();
+                }else{
+                    $(".js-load-more").show();
+                }
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+            }
+        });
+        /**
+         *
+         */
+    }
+</script>
+</body>
+</html>
