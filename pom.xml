@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<!--<java.version>1.8</java.version>-->
 		<!--<tomcat.version>8.5.13</tomcat.version>-->
 		<mybatis.spring.boot.version>1.2.0</mybatis.spring.boot.version>
 		<mysql.version>5.1.38</mysql.version>
@@ -35,6 +35,7 @@
 		<aliyun.oss.version>2.5.0</aliyun.oss.version>
 		<qcloud.cos.version>4.4</qcloud.cos.version>
 		<velocity.version>1.7</velocity.version>
+		<poi.version>3.15</poi.version>
 	</properties>
 
 	<dependencies>
@@ -166,6 +167,26 @@
 			<groupId>org.apache.velocity</groupId>
 			<version>${velocity.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
