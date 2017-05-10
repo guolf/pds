@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jxtelecom.pds.dao.CustomerRelaDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jxtelecom.pds.entity.CustomerRelaEntity" id="customerRelaMap">
+        <result property="id" column="ID"/>
+        <result property="custTelnum" column="cust_telnum"/>
+        <result property="custName" column="cust_name"/>
+        <result property="city" column="city"/>
+        <result property="accountManagerNo" column="account_manager_no"/>
+        <result property="accountManagerName" column="account_manager_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.jxtelecom.pds.entity.CustomerRelaEntity">
+		select * from tb_customer_rela where ID = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.jxtelecom.pds.entity.CustomerRelaEntity">
+		select * from tb_customer_rela
+		<where>
+			<if test="keywords!=null and keywords.trim() != ''">
+				(
+				cust_telnum like concat('%',#{keywords},'%') or
+				cust_name like concat('%',#{keywords},'%') or
+				account_manager_no like concat('%',#{keywords},'%') OR
+				account_manager_name like concat('%',#{keywords},'%')
+				)
+			</if>
+		</where>
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_customer_rela 
+	</select>
+	 
+	<insert id="save" parameterType="com.jxtelecom.pds.entity.CustomerRelaEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_customer_rela
+		(
+			`cust_telnum`, 
+			`cust_name`, 
+			`city`, 
+			`account_manager_no`, 
+			`account_manager_name`
+		)
+		values
+		(
+			#{custTelnum}, 
+			#{custName}, 
+			#{city}, 
+			#{accountManagerNo}, 
+			#{accountManagerName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.jxtelecom.pds.entity.CustomerRelaEntity">
+		update tb_customer_rela 
+		<set>
+			<if test="custTelnum != null">`cust_telnum` = #{custTelnum}, </if>
+			<if test="custName != null">`cust_name` = #{custName}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="accountManagerNo != null">`account_manager_no` = #{accountManagerNo}, </if>
+			<if test="accountManagerName != null">`account_manager_name` = #{accountManagerName}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_customer_rela where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_customer_rela where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

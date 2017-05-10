@@ -22,7 +22,7 @@
 		from tb_task a
 		LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
 		LEFT JOIN sys_user c ON a.create_user_id=c.user_id
-		LEFT JOIN t_customer_rela d ON b.user_code=d.cust_telnum
+		LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
         <choose>
             <when test="userName != null and userName.trim() != ''">
                 WHERE b.user_name like concat('%',#{userName},'%')

@@ -23,7 +23,12 @@
 	<select id="queryList" resultType="com.jxtelecom.pds.entity.ChargeOverdueEntity">
 		select * from tb_charge_overdue
 		<where>
-
+			<if test="keywords!=null and keywords.trim() != ''">
+				 (
+				user_name like concat('%',#{keywords},'%') or
+				user_code like concat('%',#{keywords},'%')
+				)
+			</if>
 		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
