@@ -18,17 +18,24 @@
     <script src="../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
     <script src="../public/plugins/ztree/jquery.ztree.all.min.js"></script>
     <script src="../public/js/common.js"></script>
+    <script src="../public/libs/ajaxupload.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
-            <a v-if="hasPermission('chargeoverdue:save')" class="btn btn-primary" @click="add"><i
-                    class="fa fa-plus"></i>&nbsp;新增</a>
+
+            <div class="form-group col-sm-2">
+                <input type="text" class="form-control" v-model="q.keywords" @keyup.enter="query" placeholder="关键字管理">
+            </div>
+            <a class="btn btn-default" @click="query">查询</a>
+
+
+            <a v-if="hasPermission('chargeoverdue:save')" class="btn btn-primary" id="upload"><i
+                    class="fa fa-plus"></i>&nbsp;导入</a>
             <a v-if="hasPermission('chargeoverdue:update')" class="btn btn-primary" @click="update"><i
-                    class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-            <a v-if="hasPermission('chargeoverdue:delete')" class="btn btn-primary" @click="del"><i
-                    class="fa fa-trash-o"></i>&nbsp;删除</a>
+                    class="fa fa-pencil-square-o"></i>&nbsp;生成任务</a>
+
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>

@@ -3,15 +3,15 @@ $(function () {
         url: '../chargeoverdue/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'ID', width: 50, key: true },
+			//{ label: 'id', name: 'id', index: 'ID', width: 50, key: true },
 			{ label: '用户姓名', name: 'userName', index: 'user_name', width: 80 },
 			{ label: '手机号码', name: 'userCode', index: 'user_code', width: 80 },
 			{ label: '地址', name: 'address', index: 'address', width: 80 },
 			{ label: '地市', name: 'city', index: 'city', width: 80 },
 			{ label: '欠费金额', name: 'amount', index: 'amount', width: 80 },
 			{ label: '账期', name: 'accountMonth', index: 'account_month', width: 80 },
-			{ label: '创建时间', name: 'createDate', index: 'create_date', width: 80 },
-			{ label: '创建人', name: 'createUserId', index: 'create_user_id', width: 80 }
+			{ label: '创建时间', name: 'createDate', index: 'create_date', width: 80 }
+			//{ label: '创建人', name: 'createUserId', index: 'create_user_id', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -38,11 +38,35 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
+
+	new AjaxUpload('#upload', {
+		action: '../chargeoverdue/upload',
+		name: 'file',
+		autoSubmit:true,
+		responseType:"json",
+		onSubmit:function(file, extension){
+			if (!(extension && /^(xls|xlsx|csv)$/.test(extension.toLowerCase()))){
+				alert('只支持excel和csv格式的图片！');
+				return false;
+			}
+		},
+		onComplete : function(file, r){
+			if(r.code == 0){
+				alert(r.url);
+				vm.reload();
+			}else{
+				alert(r.msg);
+			}
+		}
+	});
 });
 
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			keywords: null
+		},
 		showList: true,
 		title: null,
 		chargeOverdue: {}
@@ -114,8 +138,9 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
-                page:page
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:{'keywords': vm.q.keywords},
+				page:page
             }).trigger("reloadGrid");
 		}
 	}
