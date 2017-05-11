@@ -39,7 +39,7 @@
                                 page=reponse.page.list;
                                 var result = '';
                                 if(page!=null&&page.length>0){
-                                    $(".gridtable").show();
+                                    $("#aaa").show();
                                     for(var i=0; i<page.length; i++){
                                         xAxisTitle[i]=page[i].accountManagerName;
                                         var taskBaifen=page[i].taskSuccessRatio;
@@ -119,7 +119,7 @@
 
                                     }
                                 }else{
-                                    $(".gridtable").hide();
+                                    $("#aaa").hide();
                                 }
                             }
                         });
@@ -129,7 +129,7 @@
         </div>
         <div class="col-sm-5" >
             <div class="ibox float-e-margins" >
-                <div class="ibox-content"  style="height: 400px;"  >
+                <div id="aaa" class="ibox-content"  style="height: 400px;"  >
                     <div style="text-align: center;margin-top: 5px;"><p><b><font size="4">业绩排名一览表</font></b></p></div>
                     <table class="gridtable"  style="width:100%;margin-top:80px;">
                         <tr style="height: 24px;" >
