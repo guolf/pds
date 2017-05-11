@@ -153,15 +153,15 @@ public class SysMenuController extends AbstractController {
     @RequestMapping("/user")
     public R user() {
         List<SysMenuEntity> menuList = null;
-        Set<String> permissions = null;
+        Set<String> permissions = sysMenuService.getUserPermissions(getUserId());
         ValueOperations<String, String> ops = this.template.opsForValue();
         String keyMenu = getUserId() + "_menuList";
         if (!template.hasKey(keyMenu)) {
-            System.out.println("  from database " );
+            logger.debug("菜单从database读取");
             menuList = sysMenuService.getUserMenuList(getUserId());
             ops.set(keyMenu, JSON.toJSONString(menuList));
         } else {
-            System.out.println("  from redis " );
+            logger.debug("菜单从redis读取");
             menuList = JSONObject.parseArray(ops.get(keyMenu),SysMenuEntity.class);
         }
 
