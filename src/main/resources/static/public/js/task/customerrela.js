@@ -48,10 +48,10 @@ $(function () {
 		},
 		onComplete : function(file, r){
 			if(r.code == 0){
-				alert(r.url);
+				alert("导入成功");
 				vm.reload();
 			}else{
-				alert(r.msg);
+				alert("导入失败");
 			}
 		}
 	});

@@ -77,7 +77,7 @@
   (account_manager_id,account_manager_name,city,task_num,task_success_num,task_success_ratio,
   task_fail_num,task_fail_ratio,task_incomplete_num,task_incomplete_ratio,create_date,account_day)
 select tb.user_id as account_manager_id,tb.account_manager_name,
- (select distinct city from tb_customer_rela s where s.account_manager_no = tb.account_manager_no ) as city ,
+ (select distinct city from tb_customer_rela s where s.account_manager_no = tb.account_manager_no  limit 1 ) as city ,
 tb.task_num,task_success_num,task_success_ratio,task_fail_num,task_fail_ratio,task_incomplete_num,task_incomplete_ratio,
 SYSDATE(),DATE_FORMAT(sysdate(), '%Y-%m-%d') from (
 select a.user_id, a.account_manager_name,b.account_manager_no,count(0) as task_num,
