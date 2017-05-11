@@ -29,7 +29,16 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
+	<select id="queryListByUser" resultType="com.jxtelecom.pds.entity.SysRoleEntity">
+		select a.* from sys_role a join sys_user_role b ON a.role_id = b.role_id
+		<where>
+			<if test="userId!=null and userId !=''">
+				b.user_id = #{userId}
+			</if>
+		</where>
+	</select>
+
 	<select id="queryTotal" resultType="int">
 		select count(*) from sys_role 
 		<where>

@@ -3,6 +3,7 @@ package com.jxtelecom.pds.dao;
 import com.jxtelecom.pds.entity.SysRoleEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色管理
@@ -17,4 +18,11 @@ public interface SysRoleDao extends BaseDao<SysRoleEntity> {
 	 * 查询用户创建的角色ID列表
 	 */
 	List<Long> queryRoleIdList(Long createUserId);
+
+	/**
+	 * 根据用户ID查询角色
+	 * @param userId
+	 * @return
+	 */
+	List<SysRoleEntity> queryListByUser(Map<String,String> map);
 }
