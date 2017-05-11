@@ -13,20 +13,29 @@
     <div class="page__bd">
         <div class="weui-tab">
             <div class="weui-navbar">
-                <div class="weui-navbar__item weui-bar__item_on">待办</div>
-                <div class="weui-navbar__item">已完成</div>
-            </div>
-            <div class="weui-tab__panel">
-
+                <div class="weui-navbar__item weui-bar__item_on" style="padding:8px 0px">待办</div>
+                <div class="weui-navbar__item" style="padding:8px 0px">已完成</div>
             </div>
         </div>
-        <div class="weui_panel weui_panel_access">
+        <!-- loading toast -->
+        <div id="loadingToast" style="display:none;">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content">数据加载中</p>
+            </div>
+        </div>
+        <div class="weui_panel weui_panel_access" style="margin-top:5px;">
           <!--  <div class="weui_panel_hd">任务列表</div>-->
             <div class="weui_panel_bd js-blog-list">
 
             </div>
         </div>
-        <div class="js-load-more">加载更多</div>
+        <div class="js-load-more" style="display:none;">加载更多</div>
+        <div class="weui-loadmore weui-loadmore_line">
+            <span class="weui-loadmore__tips">暂无数据</span>
+        </div>
+
     </div>
 </div>
 <script src="../public/libs/jquery.min.js"></script>
@@ -37,7 +46,7 @@
         padding:0 15px;
         width:120px;
         height:30px;
-        background-color:#D31733;
+        background-color:#EAEAEA;
         color:#fff;
         line-height:30px;
         text-align:center;
@@ -47,27 +56,45 @@
         font-size:16px;
         display:none;/*默认不显示，ajax调用成功后才决定显示与否*/
     }
+    .label-danger{
+        background-color: #5bc0de;
+    }
+    .label-success {
+        background-color: #5cb85c;
+    }
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
 </style>
 <script type="text/javascript">
-    $(function(){
-        var status=0;
-        $('.weui-navbar__item').on('click', function () {
-            var text=$(this).text();
-
-            if(text=='待办'){
+    var $loadingToast = $('#loadingToast');
+        $(function(){
+            var status=0;
+          $('.weui-navbar__item').on('click', function () {
+             var text=$(this).text();
+             if(text=='待办'){
                 status=0;
                 $('.js-blog-list').empty();
                 getData(counter, pageSize,status);
-            }else if(text=='已完成'){
+             }else if(text=='已完成'){
                 status=1;
                 $('.js-blog-list').empty();
                 getData(counter, pageSize,status);
-            }
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+             }
+             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         });
         /*初始化*/
         var counter = 1; /*第几页*/
-        var pageSize = 4; /*size*/
+        var pageSize = 10; /*size*/
         /*首次加载*/
         getData(counter, pageSize,status);
         /*监听加载更多*/
@@ -81,12 +108,13 @@
         location.href="../charge/chargehandleh5.html";
     }
     function getData(page,size,status){
-        console.log("status==>"+status);
+        if ($loadingToast.css('display') != 'none') return;
+        $loadingToast.fadeIn(100);
         var tipImage="";
         if(status==0){
-            tipImage='<i class="weui-icon-info-circle"></i>';
+            tipImage='<span class="label label-danger">待处理</span>&nbsp;&nbsp;';
         }else{
-            tipImage='<i class="weui-icon-success"></i>';
+            tipImage='<span class="label label-success">已完成</span>&nbsp;&nbsp;';
         }
         $.ajax({
             type: 'POST',
@@ -106,12 +134,16 @@
                         '<div class="weui-cell__bd"><p>'+data[i].userName+'&nbsp;&nbsp;&nbsp;欠费金额&nbsp;'+data[i].amount+'</p></div><div class="weui-cell__ft"></div></a>';
                 }
                 $('.js-blog-list').append(result);
+                $loadingToast.fadeOut(100);
                 /*******************************************/
                 /*隐藏more按钮*/
                 if ( currPage >= totalPage){
                     $(".js-load-more").hide();
+                    $(".weui-loadmore_line").show();
+
                 }else{
                     $(".js-load-more").show();
+                    $(".weui-loadmore_line").hide();
                 }
             },
             error: function(xhr, type){
