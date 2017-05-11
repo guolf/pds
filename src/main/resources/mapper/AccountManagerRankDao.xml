@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jxtelecom.pds.dao.AccountManagerRankDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jxtelecom.pds.entity.AccountManagerRankEntity" id="accountManagerRankMap">
+        <result property="id" column="ID"/>
+        <result property="accountManagerId" column="account_manager_id"/>
+        <result property="accountManagerName" column="account_manager_name"/>
+        <result property="city" column="city"/>
+        <result property="taskNum" column="task_num"/>
+        <result property="taskSuccessNum" column="task_success_num"/>
+        <result property="taskSuccessRatio" column="task_success_ratio"/>
+        <result property="taskFailNum" column="task_fail_num"/>
+        <result property="taskFailRatio" column="task_fail_ratio"/>
+        <result property="taskIncompleteNum" column="task_incomplete_num"/>
+        <result property="taskIncompleteRatio" column="task_incomplete_ratio"/>
+    </resultMap>
+
+    <select id="queryObject" resultType="com.jxtelecom.pds.entity.AccountManagerRankEntity">
+		select * from tb_account_manager_rank where ID = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.jxtelecom.pds.entity.AccountManagerRankEntity">
+        select * from tb_account_manager_rank
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by ID desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+		select count(*) from tb_account_manager_rank 
+	</select>
+
+    <insert id="save" parameterType="com.jxtelecom.pds.entity.AccountManagerRankEntity">
+		insert into tb_account_manager_rank
+		(
+			`ID`, 
+			`account_manager_id`, 
+			`account_manager_name`, 
+			`city`, 
+			`task_num`, 
+			`task_success_num`, 
+			`task_success_ratio`, 
+			`task_fail_num`, 
+			`task_fail_ratio`, 
+			`task_incomplete_num`, 
+			`task_incomplete_ratio`
+		)
+		values
+		(
+			#{id}, 
+			#{accountManagerId}, 
+			#{accountManagerName}, 
+			#{city}, 
+			#{taskNum}, 
+			#{taskSuccessNum}, 
+			#{taskSuccessRatio}, 
+			#{taskFailNum}, 
+			#{taskFailRatio}, 
+			#{taskIncompleteNum}, 
+			#{taskIncompleteRatio}
+		)
+	</insert>
+
+    <insert id="generateRank">
+		insert into tb_account_manager_rank
+  (account_manager_id,account_manager_name,city,task_num,task_success_num,task_success_ratio,
+  task_fail_num,task_fail_ratio,task_incomplete_num,task_incomplete_ratio,create_date,account_day)
+select tb.user_id as account_manager_id,tb.account_manager_name,
+ (select distinct city from tb_customer_rela s where s.account_manager_no = tb.account_manager_no ) as city ,
+tb.task_num,task_success_num,task_success_ratio,task_fail_num,task_fail_ratio,task_incomplete_num,task_incomplete_ratio,
+SYSDATE(),DATE_FORMAT(sysdate(), '%Y-%m-%d') from (
+select a.user_id, a.account_manager_name,b.account_manager_no,count(0) as task_num,
+sum(case b.result when 1 then 1 else 0 end) task_success_num,
+sum(case b.result when 1 then 1 else 0 end)/count(0) task_success_ratio,
+sum(case when b.result in (2,4) then 1 else 0 end) task_fail_num,
+sum(case when b.result in (2,4) then 1 else 0 end)/count(0) task_fail_ratio,
+sum(case when b.result in (0,3) then 1 else 0 end) task_incomplete_num,
+sum(case when b.result in (0,3) then 1 else 0 end)/count(0) task_incomplete_ratio
+ from sys_user a join tb_task b on a.account_manager_no = b.account_manager_no
+group by a.user_id,a.account_manager_name,b.account_manager_no
+)  tb
+	</insert>
+
+    <update id="update" parameterType="com.jxtelecom.pds.entity.AccountManagerRankEntity">
+        update tb_account_manager_rank
+        <set>
+            <if test="accountManagerId != null">`account_manager_id` = #{accountManagerId},</if>
+            <if test="accountManagerName != null">`account_manager_name` = #{accountManagerName},</if>
+            <if test="city != null">`city` = #{city},</if>
+            <if test="taskNum != null">`task_num` = #{taskNum},</if>
+            <if test="taskSuccessNum != null">`task_success_num` = #{taskSuccessNum},</if>
+            <if test="taskSuccessRatio != null">`task_success_ratio` = #{taskSuccessRatio},</if>
+            <if test="taskFailNum != null">`task_fail_num` = #{taskFailNum},</if>
+            <if test="taskFailRatio != null">`task_fail_ratio` = #{taskFailRatio},</if>
+            <if test="taskIncompleteNum != null">`task_incomplete_num` = #{taskIncompleteNum},</if>
+            <if test="taskIncompleteRatio != null">`task_incomplete_ratio` = #{taskIncompleteRatio}</if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from tb_account_manager_rank where ID = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_account_manager_rank where ID in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
