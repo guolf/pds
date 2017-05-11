@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.*;
  */
 @Configuration
 public class RedisConfig {
-
     @Value("${spring.redis.host:#{null}}")
     private String host;
     @Value("${spring.redis.port:#{null}}")
@@ -32,7 +31,6 @@ public class RedisConfig {
 
     @Bean(name = "jedisConnectionFactory")
     JedisConnectionFactory jedisConnectionFactory() {
-
         JedisConnectionFactory jedisConnectionFactory =new JedisConnectionFactory();
         jedisConnectionFactory.setHostName(host);
         jedisConnectionFactory.setPort(Integer.valueOf(port));
