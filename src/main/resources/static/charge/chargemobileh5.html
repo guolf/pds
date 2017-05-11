@@ -57,11 +57,25 @@
         font-size:16px;
         display:none;/*默认不显示，ajax调用成功后才决定显示与否*/
     }
+    /* 蓝色*/
     .label-danger{
         background-color: #5bc0de;
     }
+    /*红色*/
+    .label-red {
+        background-color: #d9534f;
+    }
+   /* 深蓝色*/
+    .label-primary {
+        background-color: #337ab7;
+    }
+    /* 绿色*/
     .label-success {
         background-color: #5cb85c;
+    }
+   /* 黄色*/
+    .label-warning {
+        background-color: #f0ad4e;
     }
     .label {
         display: inline;
@@ -114,11 +128,6 @@
         if ($loadingToast.css('display') != 'none') return;
         $loadingToast.fadeIn(100);
         var tipImage="";
-        if(status==0){
-            tipImage='<span class="label label-danger">待处理</span>&nbsp;&nbsp;';
-        }else{
-            tipImage='<span class="label label-success">已完成</span>&nbsp;&nbsp;';
-        }
         $.ajax({
             type: 'POST',
             url: '../task/list',
@@ -132,6 +141,17 @@
                 var result = '';
                 /*使用for循环模拟SQL里的limit(offset,size)*/
                 for(var i=0; i<data.length; i++){
+                    if(data[i].result==1){
+                        tipImage='<span class="label label-success">催缴完成</span>&nbsp;&nbsp;';
+                    }else if(data[i].result==2){
+                        tipImage='<span class="label label-red">用户拒绝</span>&nbsp;&nbsp;';
+                    }else if(data[i].result==3){
+                        tipImage='<span class="label label-warning">未联系上</span>&nbsp;&nbsp;';
+                    }else if(data[i].result==4){
+                        tipImage='<span class="label label-primary">其他原因</span>&nbsp;&nbsp;';
+                    }else if(data[i].result==0){
+                        tipImage='<span class="label label-danger">等待处理</span>&nbsp;&nbsp;';
+                    }
                     result +='<a class="weui-cell weui-cell_access" href="javascript:void(0)" onclick="jump('+data[i].id+')">' +
                         '<div class="weui-cell__hd">'+tipImage+'</div>'+
                         '<div class="weui-cell__bd"><p>'+data[i].userName+'&nbsp;&nbsp;&nbsp;欠费金额&nbsp;'+data[i].amount+'</p></div><div class="weui-cell__ft"></div></a>';
