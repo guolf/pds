@@ -14,12 +14,11 @@
     </resultMap>
 
     <select id="queryObject" resultType="com.jxtelecom.pds.entity.TaskEntity">
-		SELECT a.*,b.user_name,c.username create_user_name ,d.account_manager_no ,d.account_manager_name,
-		b.amount,b.account_month,b.address,b.user_code
-		from tb_task a
-		LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
-		LEFT JOIN sys_user c ON a.create_user_id=c.user_id
-		LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
+		SELECT a.*,b.user_name,c.username create_user_name ,c.account_manager_no ,c.account_manager_name,
+        b.amount,b.account_month,b.address,b.user_code
+        from tb_task a
+        LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
+        LEFT JOIN sys_user c ON a.account_manager_no = c.account_manager_no
 		where a.ID = #{value}
 	</select>
 
@@ -31,12 +30,12 @@
         LEFT JOIN sys_user c ON a.account_manager_no = c.account_manager_no
         <where>
             <if test="userName != null and userName.trim() != ''">
-                and (b.user_name like concat('%',#{userName},'%')
-                OR d.account_manager_no like concat('%',#{userName},'%')
-                OR d.account_manager_name like concat('%',#{userName},'%'))
+                (b.user_name like concat('%',#{userName},'%')
+                OR c.account_manager_no like concat('%',#{userName},'%')
+                OR c.account_manager_name like concat('%',#{userName},'%'))
             </if>
             <if test="isAdmin!=null and userId!=null and userId!='' and isAdmin == '0'">
-              and c.user_id = #{userId}
+                c.user_id = #{userId}
             </if>
         </where>
         order by a.ID desc
@@ -48,15 +47,17 @@
     <select id="queryTotal" resultType="int">
         SELECT count(1) from tb_task a
         LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
-        LEFT JOIN sys_user c ON a.create_user_id=c.user_id
-        LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
-        <choose>
-            <when test="userName != null and userName.trim() != ''">
-                WHERE b.user_name like concat('%',#{userName},'%')
-                OR d.account_manager_no like concat('%',#{userName},'%')
-                OR d.account_manager_name like concat('%',#{userName},'%')
-            </when>
-        </choose>
+        LEFT JOIN sys_user c ON a.account_manager_no = c.account_manager_no
+        <where>
+            <if test="userName != null and userName.trim() != ''">
+                (b.user_name like concat('%',#{userName},'%')
+                OR c.account_manager_no like concat('%',#{userName},'%')
+                OR c.account_manager_name like concat('%',#{userName},'%'))
+            </if>
+            <if test="isAdmin!=null and userId!=null and userId!='' and isAdmin == '0'">
+                 c.user_id = #{userId}
+            </if>
+        </where>
     </select>
 
     <insert id="save" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
