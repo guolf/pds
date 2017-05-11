@@ -11,6 +11,8 @@ import com.jxtelecom.pds.entity.AccountManagerRankEntity;
  */
 public interface AccountManagerRankDao extends BaseDao<AccountManagerRankEntity> {
 
+    void deleteAll();
+
     void generateRank();
 	
 }

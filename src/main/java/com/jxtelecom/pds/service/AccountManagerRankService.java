@@ -25,7 +25,9 @@ public interface AccountManagerRankService {
 	void update(AccountManagerRankEntity accountManagerRank);
 	
 	void delete(Long id);
-	
+
+	void deleteAll();
+
 	void deleteBatch(Long[] ids);
 
 	void generateRank();

@@ -20,6 +20,7 @@ public class GenerateRankTask {
 
     public void generate() {
         logger.info("客户经理定时任务。。。。开始");
+        accountManagerRankService.deleteAll();
         accountManagerRankService.generateRank();
         logger.info("客户经理定时任务。。。。结束");
     }
