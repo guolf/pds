@@ -23,11 +23,12 @@
 	</select>
 
     <select id="queryList" resultType="com.jxtelecom.pds.entity.TaskEntity">
-        SELECT a.*,b.user_name,c.username create_user_name ,c.account_manager_no ,c.account_manager_name,
+        SELECT a.*,b.user_name,d.username create_user_name ,c.account_manager_no ,c.account_manager_name,
         b.amount,b.account_month,b.address,b.user_code
         from tb_task a
         LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
         LEFT JOIN sys_user c ON a.account_manager_no = c.account_manager_no
+        left join sys_user d on a.create_user_id = d.user_id
         <where>
             <if test="userName != null and userName.trim() != ''">
                 (b.user_name like concat('%',#{userName},'%')
@@ -105,6 +106,27 @@
         (select distinct tcr.account_manager_no from tb_customer_rela tcr
         left JOIN tb_charge_overdue tco on tcr.cust_telnum = tco.user_code
         where tco.ID = #{chargeId})
+        )
+    </insert>
+
+    <insert id="saveFromAdd" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_task
+        (
+        `create_date`,
+        `create_user_id`,
+        `charge_id`,
+        `result`,
+        `remark`,
+        account_manager_no
+        )
+        values
+        (
+        #{createDate},
+        #{createUserId},
+        #{chargeId},
+        #{result},
+        #{remark},
+        #{accountManagerNo}
         )
     </insert>
 

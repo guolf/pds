@@ -1,22 +1,29 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/renren-security-boot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-        username: renren
+        url: jdbc:mysql://182.106.129.91:3306/jxtelecom?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        username: root
         password: 123456
         #连接池的配置信息
         initialSize: 10
         minIdle: 10
         maxActive: 100
-#        maxWait: 60000
-#        timeBetweenEvictionRunsMillis: 60000
-#        minEvictableIdleTimeMillis: 300000
-#        validationQuery: SELECT 1 FROM DUAL
-#        testWhileIdle: true
-#        testOnBorrow: false
-#        testOnReturn: false
-#        poolPreparedStatements: true
-#        maxPoolPreparedStatementPerConnectionSize: 20
-
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
         # Druid 配置
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    redis:
+        host: 182.106.129.91
+        port: 6379
+        pool:
+            max-active: 10000
+            max-wait: 60000
+            max-idle: 100
+            timeout: 60000

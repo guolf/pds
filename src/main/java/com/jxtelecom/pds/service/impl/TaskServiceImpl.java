@@ -51,5 +51,9 @@ public class TaskServiceImpl implements TaskService {
 	public void deleteBatch(Long[] ids){
 		taskDao.deleteBatch(ids);
 	}
-	
+
+	@Override
+	public void saveFromAdd(TaskEntity t) {
+		taskDao.saveFromAdd(t);
+	}
 }

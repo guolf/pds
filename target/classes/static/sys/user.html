@@ -39,7 +39,7 @@
 		<div class="panel-heading">{{title}}</div>
 		<form class="form-horizontal">
 			<div class="form-group">
-			   	<div class="col-sm-2 control-label">用户名</div>
+			   	<div class="col-sm-2 control-label">用户登陆名</div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="user.username" placeholder="登录账号"/>
 			    </div>
@@ -61,6 +61,18 @@
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="user.mobile" placeholder="手机号"/>
 			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">工号</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="user.accountManagerNo" placeholder="工号"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">用户姓名</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="user.accountManagerName" placeholder="用户姓名"/>
+				</div>
 			</div>
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">角色</div>

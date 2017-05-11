@@ -70,7 +70,9 @@
 			`mobile`, 
 			`status`, 
 			`create_user_id`,
-			`create_time`
+			`create_time`,
+			account_manager_no,
+			account_manager_name
 		)
 		values
 		(
@@ -81,7 +83,9 @@
 			#{mobile}, 
 			#{status}, 
 			#{createUserId},
-			#{createTime}
+			#{createTime},
+			#{accountManagerNo},
+			#{accountManagerName}
 		)
 	</insert>
 	 
@@ -93,6 +97,8 @@
 			<if test="email != null">`email` = #{email}, </if>
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="status != null">`status` = #{status}, </if>
+			<if test="accountManagerNo != null">`account_manager_no` = #{accountManagerNo}, </if>
+			<if test="accountManagerName != null">`account_manager_name` = #{accountManagerName} </if>
 		</set>
 		where user_id = #{userId} 
 		<if test="createUserId != null">

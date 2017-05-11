@@ -27,4 +27,6 @@ public interface TaskService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
+
+	void saveFromAdd(TaskEntity t);
 }

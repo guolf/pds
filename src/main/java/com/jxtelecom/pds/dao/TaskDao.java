@@ -10,5 +10,7 @@ import com.jxtelecom.pds.entity.TaskEntity;
  * @date 2017-05-10 11:25:19
  */
 public interface TaskDao extends BaseDao<TaskEntity> {
+
+    void saveFromAdd(TaskEntity t);
 	
 }

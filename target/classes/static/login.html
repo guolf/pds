@@ -20,13 +20,13 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page">
-<div class="login-box" id="rrapp" v-cloak>
-  <div class="login-logo">
-    <b>派单管理系统</b>
+<body class="hold-transition login-page" style="background:url(public/images/login.jpg) center no-repeat;background-size:cover">
+<div class="login-box" id="rrapp" v-cloak style="z-index:9999;position:relative;margin:0 auto;">
+  <div class="login-logo" style="margin-top: 25px;">
+    <b><font color="white">派单管理系统</font></b>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body" style="margin-top:20px;">
       <p class="login-box-msg">管理员登录</p>
       <div v-if="error" class="alert alert-danger alert-dismissible">
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>

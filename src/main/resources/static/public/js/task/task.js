@@ -2,8 +2,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '../task/list',
         datatype: "json",
-        colModel: [			
-			{ label: 'id', name: 'id', index: 'ID', width: 50, key: true },
+        colModel: [
 			{ label: '任务创建时间', name: 'createDate', index: 'create_date', width: 80 },
 			{ label: '任务创建人', name: 'createUserName', index: 'create_user_name', width: 80 },
 			{ label: '欠费人', name: 'userName', index: 'user_name', width: 80 },

@@ -71,7 +71,14 @@ public class ChargeOverdueController extends AbstractController {
     @RequestMapping("/save")
     @RequiresPermissions("chargeoverdue:save")
     public R save(@RequestBody ChargeOverdueEntity chargeOverdue) {
+        chargeOverdue.setCreateDate(new Date());
         chargeOverdueService.save(chargeOverdue);
+
+        TaskEntity task = new TaskEntity().convert(chargeOverdue);
+        task.setCreateUserId(getUserId());
+        task.setCreateDate(new Date());
+        task.setAccountManagerNo(chargeOverdue.getAccountManagerNo());
+        taskService.saveFromAdd(task);
 
         return R.ok();
     }
