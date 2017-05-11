@@ -1,4 +1,5 @@
  **技术选型：**
+ 
 - 核心框架：Spring Boot 1.5
 - 安全框架：Apache Shiro 1.3
 - 视图框架：Spring MVC 4.3
@@ -7,11 +8,12 @@
 - 数据库连接池：Druid 1.0
 - 日志管理：SLF4J 1.7、Log4j
 - 页面交互：Vue2.x
-
-sssa
+- 缓存：redis 2.8
+- 手机页面：weui
 
 
  **软件需求** 
+ 
 - JDK1.8+
 - MySQL5.5+
 - Tomcat7.0+
@@ -20,8 +22,9 @@ sssa
 
 
  **本地部署**
+ 
 - 通过git下载源码
-- 创建数据库renren-security-boot，数据库编码为UTF-8
+- 创建数据库jxtelecom，数据库编码为UTF-8
 - 执行doc/db.sql文件，初始化数据
 - 修改application.properties文件，更新MySQL账号和密码
 - Eclipse、IDEA运行PdsApplication.java，则可启动项目
@@ -29,3 +32,7 @@ sssa
 - API文档路径：http://localhost/swagger-ui.html
 - 账号密码：admin/admin
  
+**demo预览**
+
+- [http://182.106.129.91:8181/login.html](http://182.106.129.91:8181/login.html)
+- 测试账号：admin,密码admin
