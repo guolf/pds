@@ -38,8 +38,11 @@
             <if test="isAdmin!=null and userId!=null and userId!='' and isAdmin == '0'">
                 c.user_id = #{userId}
             </if>
-            <if test="status!=null and status!=''">
-                AND a.result = #{status}
+            <if test="status!=null and status!='' and status!=0">
+                AND a.result != 0
+            </if>
+            <if test="status!=null and status!='' and status==0">
+                AND a.result = 0
             </if>
         </where>
         order by a.ID desc
@@ -61,8 +64,11 @@
             <if test="isAdmin!=null and userId!=null and userId!='' and isAdmin == '0'">
                  c.user_id = #{userId}
             </if>
-            <if test="status!=null and status!=''">
-                AND a.result = #{status}
+            <if test="status!=null and status!='' and status!=0">
+                AND a.result != 0
+            </if>
+            <if test="status!=null and status!='' and status==0">
+                AND a.result = 0
             </if>
         </where>
     </select>

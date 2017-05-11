@@ -39,7 +39,6 @@
                                 page=reponse.page.list;
                                 var result = '';
                                 if(page!=null&&page.length>0){
-                                    $(".gridtable").show();
                                     for(var i=0; i<page.length; i++){
                                         xAxisTitle[i]=page[i].accountManagerName;
                                         var taskBaifen=page[i].taskSuccessRatio;
@@ -118,8 +117,6 @@
                                         char1.setOption(option);
 
                                     }
-                                }else{
-                                    $(".gridtable").hide();
                                 }
                             }
                         });

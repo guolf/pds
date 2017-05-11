@@ -120,4 +120,8 @@ group by a.user_id,a.account_manager_name,b.account_manager_no
         </foreach>
     </delete>
 
+    <delete id="deleteAll">
+        delete from tb_account_manager_rank
+    </delete>
+
 </mapper>
