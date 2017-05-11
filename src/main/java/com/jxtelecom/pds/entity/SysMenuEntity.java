@@ -187,7 +187,7 @@ public class SysMenuEntity implements Serializable {
 	}
 
 	public Boolean getOpen() {
-		return open;
+		return true;
 	}
 
 	public void setOpen(Boolean open) {
