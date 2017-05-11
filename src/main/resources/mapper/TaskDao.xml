@@ -3,7 +3,7 @@
 
 <mapper namespace="com.jxtelecom.pds.dao.TaskDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.jxtelecom.pds.entity.TaskEntity" id="taskMap">
         <result property="id" column="ID"/>
         <result property="createDate" column="create_date"/>
@@ -13,7 +13,7 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-	<select id="queryObject" resultType="com.jxtelecom.pds.entity.TaskEntity">
+    <select id="queryObject" resultType="com.jxtelecom.pds.entity.TaskEntity">
 		SELECT a.*,b.user_name,c.username create_user_name ,d.account_manager_no ,d.account_manager_name,
 		b.amount,b.account_month,b.address,b.user_code
 		from tb_task a
@@ -23,44 +23,43 @@
 		where a.ID = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.jxtelecom.pds.entity.TaskEntity">
-		SELECT a.*,b.user_name,c.username create_user_name ,d.account_manager_no ,d.account_manager_name,
-		b.amount,b.account_month,b.address,b.user_code
-		from tb_task a
-		LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
-		LEFT JOIN sys_user c ON a.create_user_id=c.user_id
-		LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
+    <select id="queryList" resultType="com.jxtelecom.pds.entity.TaskEntity">
+        SELECT a.*,b.user_name,c.username create_user_name ,c.account_manager_no ,c.account_manager_name,
+        b.amount,b.account_month,b.address,b.user_code
+        from tb_task a
+        LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
+        LEFT JOIN sys_user c ON a.account_manager_no = c.account_manager_no
+        <where>
+            <if test="userName != null and userName.trim() != ''">
+                and (b.user_name like concat('%',#{userName},'%')
+                OR d.account_manager_no like concat('%',#{userName},'%')
+                OR d.account_manager_name like concat('%',#{userName},'%'))
+            </if>
+            <if test="isAdmin!=null and userId!=null and userId!='' and isAdmin == '0'">
+              and c.user_id = #{userId}
+            </if>
+        </where>
+        order by a.ID desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        SELECT count(1) from tb_task a
+        LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
+        LEFT JOIN sys_user c ON a.create_user_id=c.user_id
+        LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
         <choose>
             <when test="userName != null and userName.trim() != ''">
                 WHERE b.user_name like concat('%',#{userName},'%')
-				OR d.account_manager_no like concat('%',#{userName},'%')
-				OR d.account_manager_name like concat('%',#{userName},'%')
-				order by a.ID desc
+                OR d.account_manager_no like concat('%',#{userName},'%')
+                OR d.account_manager_name like concat('%',#{userName},'%')
             </when>
-			<otherwise>
-                order by a.ID desc
-			</otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		SELECT count(1) from tb_task a
-		LEFT JOIN tb_charge_overdue b ON a.charge_id=b.ID
-		LEFT JOIN sys_user c ON a.create_user_id=c.user_id
-		LEFT JOIN tb_customer_rela d ON b.user_code=d.cust_telnum
-		<choose>
-			<when test="userName != null and userName.trim() != ''">
-				WHERE b.user_name like concat('%',#{userName},'%')
-				OR d.account_manager_no like concat('%',#{userName},'%')
-				OR d.account_manager_name like concat('%',#{userName},'%')
-			</when>
-		</choose>
-	</select>
-	 
-	<insert id="save" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
+    </select>
+
+    <insert id="save" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_task
 		(
 			`create_date`, 
@@ -78,28 +77,28 @@
 			#{remark}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="com.jxtelecom.pds.entity.TaskEntity">
-		update tb_task 
-		<set>
-			<if test="createDate != null">`create_date` = #{createDate}, </if>
-			<if test="createUserId != null">`create_user_id` = #{createUserId}, </if>
-			<if test="chargeId != null">`charge_id` = #{chargeId}, </if>
-			<if test="result != null">`result` = #{result}, </if>
-			<if test="remark != null">`remark` = #{remark}</if>
-		</set>
-		where ID = #{id}
-	</update>
-	
-	<delete id="delete">
+
+    <update id="update" parameterType="com.jxtelecom.pds.entity.TaskEntity">
+        update tb_task
+        <set>
+            <if test="createDate != null">`create_date` = #{createDate},</if>
+            <if test="createUserId != null">`create_user_id` = #{createUserId},</if>
+            <if test="chargeId != null">`charge_id` = #{chargeId},</if>
+            <if test="result != null">`result` = #{result},</if>
+            <if test="remark != null">`remark` = #{remark}</if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <delete id="delete">
 		delete from tb_task where ID = #{value}
 	</delete>
-	
-	<delete id="deleteBatch">
-		delete from tb_task where ID in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
+
+    <delete id="deleteBatch">
+        delete from tb_task where ID in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

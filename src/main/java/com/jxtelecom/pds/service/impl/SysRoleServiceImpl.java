@@ -10,6 +10,7 @@ import com.jxtelecom.pds.utils.Constant;
 import com.jxtelecom.pds.utils.RRException;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,5 +105,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if(!menuIdList.containsAll(role.getMenuIdList())){
 			throw new RRException("新增角色的权限，已超出你的权限范围");
 		}
+	}
+
+	@Override
+	public List<SysRoleEntity> queryListByUser(Long userId) {
+		Map map = new HashMap();
+		map.put("userId",String.valueOf(userId));
+		return sysRoleDao.queryListByUser(map);
 	}
 }

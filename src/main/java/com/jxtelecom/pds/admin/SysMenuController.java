@@ -3,6 +3,7 @@ package com.jxtelecom.pds.admin;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jxtelecom.pds.entity.SysMenuEntity;
+import com.jxtelecom.pds.entity.SysRoleEntity;
 import com.jxtelecom.pds.service.SysMenuService;
 import com.jxtelecom.pds.utils.*;
 import com.jxtelecom.pds.utils.annotation.SysLog;

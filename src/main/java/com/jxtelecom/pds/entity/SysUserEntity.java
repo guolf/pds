@@ -57,6 +57,8 @@ public class SysUserEntity implements Serializable {
 	 * 角色ID列表
 	 */
 	private List<Long> roleIdList;
+
+	private List<SysRoleEntity> roleEntities;
 	
 	/**
 	 * 创建者ID
@@ -215,5 +217,13 @@ public class SysUserEntity implements Serializable {
 
 	public void setAccountManagerName(String accountManagerName) {
 		this.accountManagerName = accountManagerName;
+	}
+
+	public List<SysRoleEntity> getRoleEntities() {
+		return roleEntities;
+	}
+
+	public void setRoleEntities(List<SysRoleEntity> roleEntities) {
+		this.roleEntities = roleEntities;
 	}
 }
