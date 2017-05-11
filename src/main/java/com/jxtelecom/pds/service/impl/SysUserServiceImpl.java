@@ -49,7 +49,12 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public SysUserEntity queryByUserName(String username) {
-		return sysUserDao.queryByUserName(username);
+		SysUserEntity entity = sysUserDao.queryByUserName(username);
+		if(entity!=null){
+			entity.setRoleEntities(sysRoleService.queryListByUser(entity.getUserId()));
+		}
+
+		return entity;
 	}
 	
 	@Override
