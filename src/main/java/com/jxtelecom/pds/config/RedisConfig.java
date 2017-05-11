@@ -32,6 +32,7 @@ public class RedisConfig {
 
     @Bean(name = "jedisConnectionFactory")
     JedisConnectionFactory jedisConnectionFactory() {
+
         JedisConnectionFactory jedisConnectionFactory =new JedisConnectionFactory();
         jedisConnectionFactory.setHostName(host);
         jedisConnectionFactory.setPort(Integer.valueOf(port));
@@ -41,6 +42,7 @@ public class RedisConfig {
         pool.setMaxIdle(maxIdle);
         jedisConnectionFactory.setPoolConfig(pool);
         jedisConnectionFactory.setTimeout(timeout);
+
         return jedisConnectionFactory;
     }
 

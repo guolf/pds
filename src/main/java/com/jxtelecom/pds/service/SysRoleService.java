@@ -31,4 +31,11 @@ public interface SysRoleService {
 	 * 查询用户创建的角色ID列表
 	 */
 	List<Long> queryRoleIdList(Long createUserId);
+
+	/**
+	 * 根据用户ID查询角色
+	 * @param userId
+	 * @return
+	 */
+	List<SysRoleEntity> queryListByUser(Long userId);
 }

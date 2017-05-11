@@ -11,7 +11,16 @@
 </head>
 <body>
 <!-- 使用 -->
+<!--
 <div class="weui-cells__title">表单</div>
+-->
+<div id="toast" style="display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <p class="weui-toast__content">操作成功</p>
+    </div>
+</div>
 <div class="weui-cells weui-cells_form">
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
@@ -46,7 +55,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">催缴结果</label></div>
         <div class="weui-cell__bd">
-            <select class="weui-select" style="margin-left:-5px;" name="result" id="result">
+            <select class="weui-select" style="padding-left:0px;width: 40%;" name="result" id="result">
                 <option value="1">催缴成功</option>
                 <option value="2">用户拒绝</option>
                 <option value="3">未联系上</option>
@@ -62,16 +71,15 @@
         </div>
     </div>
     <div class="button-sp-area" style="text-align:center; margin:0 auto;">
-        <a href="javascript:;" onclick="submitInfo();" class="weui-btn weui-btn_mini weui-btn_primary">成功</a>
-        &nbsp; &nbsp; &nbsp; &nbsp; 
-        <a href="javascript:;" onclick="submitInfo();"class="weui-btn weui-btn_mini weui-btn_warn">失败</a>
-        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="javascript:;" onclick="submitInfo();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="javascript:history.back(-1);" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
     </div>
 </div>
 </body>
 <script type="text/javascript">
     var id=localStorage.id;
+    var $toast = $('#toast');
     $(function () {
         $.ajax({
             type: 'GET',
@@ -104,14 +112,18 @@
                 'Content-Type' : 'application/json;charset=utf-8'
             },
             success: function(reponse){
+                if ($toast.css('display') != 'none') return;
+                $toast.fadeIn(100);
+                setTimeout(function () {
+                    $toast.fadeOut(100);
+                    location.href="../charge/chargemobileh5.html";
+                }, 1500);
 
             },
             error: function(xhr, type){
                 alert('Ajax error!');
             }
         })
-
-
     }
 </script>
 </html>
