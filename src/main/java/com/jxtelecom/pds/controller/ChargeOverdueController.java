@@ -100,7 +100,6 @@ public class ChargeOverdueController extends AbstractController {
                 TaskEntity task = new TaskEntity().convert(user);
                 task.setCreateUserId(getUserId());
                 taskService.save(task);
-
             }
 
             return R.ok();

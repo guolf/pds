@@ -35,6 +35,8 @@ public class ChargeOverdueEntity implements Serializable {
     // 创建人
     private Long createUserId;
 
+    private String accountManagerNo;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -115,5 +117,13 @@ public class ChargeOverdueEntity implements Serializable {
 
     public Long getCreateUserId() {
         return createUserId;
+    }
+
+    public String getAccountManagerNo() {
+        return accountManagerNo;
+    }
+
+    public void setAccountManagerNo(String accountManagerNo) {
+        this.accountManagerNo = accountManagerNo;
     }
 }

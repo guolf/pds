@@ -60,7 +60,7 @@
         </where>
     </select>
 
-    <insert id="save" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveNew" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_task
 		(
 			`create_date`, 
@@ -78,6 +78,29 @@
 			#{remark}
 		)
 	</insert>
+
+    <insert id="save" parameterType="com.jxtelecom.pds.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_task
+        (
+        `create_date`,
+        `create_user_id`,
+        `charge_id`,
+        `result`,
+        `remark`,
+        account_manager_no
+        )
+        values
+        (
+        #{createDate},
+        #{createUserId},
+        #{chargeId},
+        #{result},
+        #{remark},
+        (select distinct tcr.account_manager_no from tb_customer_rela tcr
+        left JOIN tb_charge_overdue tco on tcr.cust_telnum = tco.user_code
+        where tco.ID = #{chargeId})
+        )
+    </insert>
 
     <update id="update" parameterType="com.jxtelecom.pds.entity.TaskEntity">
         update tb_task
