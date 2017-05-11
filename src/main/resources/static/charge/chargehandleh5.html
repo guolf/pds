@@ -67,11 +67,10 @@
         <div class="weui-cell__hd"><label class="weui-label">备注</label></div>
         <div class="weui-cell__bd">
             <textarea  id="remark" class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
-            <div class="weui-textarea-counter"><span>0</span>/200</div>
         </div>
     </div>
     <div class="button-sp-area" style="text-align:center; margin:0 auto;">
-        <a href="javascript:;" onclick="submitInfo();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
+        <a href="javascript:;" onclick="submitInfo();" id="baocun" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         <a href="javascript:history.back(-1);" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
     </div>
@@ -79,6 +78,7 @@
 </body>
 <script type="text/javascript">
     var id=localStorage.id;
+    var status=localStorage.state;
     var $toast = $('#toast');
     $(function () {
         $.ajax({
@@ -92,7 +92,13 @@
                 $("#amount").text(data.amount);
                 $("#accountMonth").text(data.accountMonth);
                 $("#address").text(data.address);
-            },
+                $("#remark").text(data.remark);
+                if(status!='0'){
+                    $("#result").attr("disabled","disabled");
+                    $("#remark").attr("readonly","readonly");
+                    $("#baocun").css({ "display": "none" });
+                }
+          },
             error: function(xhr, type){
                 alert('Ajax error!');
             }
