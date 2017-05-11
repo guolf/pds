@@ -56,4 +56,7 @@ public class AccountManagerRankServiceImpl implements AccountManagerRankService 
 	public void generateRank() {
 		accountManagerRankDao.generateRank();
 	}
+
+	@Override
+	public void deleteAll() { accountManagerRankDao.deleteAll();}
 }

@@ -4,9 +4,9 @@ spring:
         username: root
         password: 123456
         #连接池的配置信息
-        initialSize: 10
-        minIdle: 10
-        maxActive: 100
+        initialSize: 50
+        minIdle: 50
+        maxActive: 500
         maxWait: 60000
         timeBetweenEvictionRunsMillis: 60000
         minEvictableIdleTimeMillis: 300000
@@ -16,9 +16,13 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxPoolPreparedStatementPerConnectionSize: 20
+        removeAbandonedTimeout: 180000
+        removeAbandoned: true
+
         # Druid 配置
         filters: stat,wall,log4j
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
     redis:
         host: 182.106.129.91
         port: 6379
