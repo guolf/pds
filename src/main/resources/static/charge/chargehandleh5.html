@@ -93,7 +93,9 @@
                 $("#amount").text(data.amount);
                 $("#accountMonth").text(data.accountMonth);
                 $("#address").text(data.address);
-                $(".weui-select").val(data.result);
+                if(data.result!=0){
+                    $(".weui-select").val(data.result);
+                }
                 $("#remark").text(data.remark);
                 if(status!='0'){
                     $("#result").attr("disabled","disabled");
