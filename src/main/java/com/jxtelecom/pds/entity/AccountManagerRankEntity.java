@@ -42,6 +42,17 @@ public class AccountManagerRankEntity implements Serializable {
 	private String  accountDay;
 
 	private Date createDate;
+
+	private Integer rank;
+
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
 	/**
 	 * 设置：
 	 */

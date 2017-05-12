@@ -49,7 +49,7 @@
                                             taskBaifen = 100 * (taskBaifen * 1000) / 1000;
                                         }
                                         yAxisData[i]=taskBaifen;
-                                        result +="<tr><td>"+page[i].accountManagerName+"</td><td>"+(i+1)+"</td><td>"+page[i].taskNum+"</td><td>"+page[i].taskSuccessNum+"</td><td>"+taskBaifen+"%</td></tr>";
+                                        result +="<tr><td>"+page[i].accountManagerName+"</td><td>"+page[i].rank+"</td><td>"+page[i].taskNum+"</td><td>"+page[i].taskSuccessNum+"</td><td>"+taskBaifen+"%</td></tr>";
                                     }
                                     $('.js-blog-list').append(result);
                                     console.log("==>"+xAxisTitle+","+yAxisData);
