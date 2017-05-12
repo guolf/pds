@@ -3,6 +3,7 @@ $(function () {
         url: '../accountmanagerrank/list',
         datatype: "json",
         colModel: [
+            {label: '排名', name: 'rank', index: 'rank', width: 80},
             {label: '客户经理', name: 'accountManagerName', index: 'account_manager_name', width: 80},
             {label: '地市', name: 'city', index: 'city', width: 80},
             {label: '总任务数', name: 'taskNum', index: 'task_num', width: 80},

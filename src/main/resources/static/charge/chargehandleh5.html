@@ -31,7 +31,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
         <div class="weui-cell__bd">
-            <label id="userCode"></label>
+            <a id="userCodeaa" href=""><label id="userCode"></label></a>
         </div>
     </div>
     <div class="weui-cell">
@@ -89,6 +89,7 @@
                 var data = reponse.task;
                 $("#userName").text(data.userName);
                 $("#userCode").text(data.userCode);
+                $("#userCodeaa").attr("href","tel:"+data.userCode);
                 $("#amount").text(data.amount);
                 $("#accountMonth").text(data.accountMonth);
                 $("#address").text(data.address);
