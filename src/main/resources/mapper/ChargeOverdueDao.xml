@@ -44,7 +44,15 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from tb_charge_overdue 
+		select count(*) from tb_charge_overdue
+		<where>
+			<if test="keywords!=null and keywords.trim() != ''">
+				(
+				user_name like concat('%',#{keywords},'%') or
+				user_code like concat('%',#{keywords},'%')
+				)
+			</if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.jxtelecom.pds.entity.ChargeOverdueEntity" useGeneratedKeys="true" keyProperty="id">

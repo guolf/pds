@@ -113,6 +113,9 @@ var vm = new Vue({
                 }
             });
         },
+        exportExcel: function(event){
+            $("#form1").submit();
+        },
         del: function (event) {
             var ids = getSelectedRows();
             if (ids == null) {

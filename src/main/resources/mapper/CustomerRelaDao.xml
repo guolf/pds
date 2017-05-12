@@ -43,7 +43,17 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from tb_customer_rela 
+		select count(*) from tb_customer_rela
+		<where>
+			<if test="keywords!=null and keywords.trim() != ''">
+				(
+				cust_telnum like concat('%',#{keywords},'%') or
+				cust_name like concat('%',#{keywords},'%') or
+				account_manager_no like concat('%',#{keywords},'%') OR
+				account_manager_name like concat('%',#{keywords},'%')
+				)
+			</if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.jxtelecom.pds.entity.CustomerRelaEntity" useGeneratedKeys="true" keyProperty="id">

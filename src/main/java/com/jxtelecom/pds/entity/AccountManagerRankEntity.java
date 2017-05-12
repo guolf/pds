@@ -1,5 +1,7 @@
 package com.jxtelecom.pds.entity;
 
+import com.jxtelecom.pds.utils.excel.annotation.ExcelField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -45,6 +47,7 @@ public class AccountManagerRankEntity implements Serializable {
 
 	private Integer rank;
 
+	@ExcelField(title = "排名", align = 2, sort = 0)
 	public Integer getRank() {
 		return rank;
 	}
@@ -74,6 +77,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "客户经理工号", align = 2, sort = 10)
 	public Long getAccountManagerId() {
 		return accountManagerId;
 	}
@@ -86,6 +90,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "姓名", align = 2, sort = 20)
 	public String getAccountManagerName() {
 		return accountManagerName;
 	}
@@ -98,6 +103,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "地市", align = 2, sort = 30)
 	public String getCity() {
 		return city;
 	}
@@ -110,6 +116,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "总任务数", align = 2, sort = 40)
 	public Integer getTaskNum() {
 		return taskNum;
 	}
@@ -122,6 +129,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "成功数", align = 2, sort = 50)
 	public Integer getTaskSuccessNum() {
 		return taskSuccessNum;
 	}
@@ -134,6 +142,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "成功率", align = 2, sort = 60)
 	public Float getTaskSuccessRatio() {
 		return taskSuccessRatio;
 	}
@@ -146,6 +155,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "失败数", align = 2, sort = 70)
 	public Integer getTaskFailNum() {
 		return taskFailNum;
 	}
@@ -158,6 +168,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "失败率", align = 2, sort = 80)
 	public Float getTaskFailRatio() {
 		return taskFailRatio;
 	}
@@ -170,6 +181,7 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "未完成数", align = 2, sort = 90)
 	public Integer getTaskIncompleteNum() {
 		return taskIncompleteNum;
 	}
@@ -182,10 +194,12 @@ public class AccountManagerRankEntity implements Serializable {
 	/**
 	 * 获取：
 	 */
+	@ExcelField(title = "未完成率", align = 2, sort = 100)
 	public Float getTaskIncompleteRatio() {
 		return taskIncompleteRatio;
 	}
 
+	@ExcelField(title = "报表时间", align = 2, sort = 120)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -194,11 +208,12 @@ public class AccountManagerRankEntity implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public void setAccountDay(String accountDay) {
-		this.accountDay = accountDay;
-	}
-
+	@ExcelField(title = "账期", align = 2, sort = 110)
 	public String getAccountDay() {
 		return accountDay;
+	}
+
+	public void setAccountDay(String accountDay) {
+		this.accountDay = accountDay;
 	}
 }
