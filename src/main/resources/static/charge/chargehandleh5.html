@@ -59,7 +59,7 @@
                 <option value="1">催缴成功</option>
                 <option value="2">用户拒绝</option>
                 <option value="3">未联系上</option>
-                <option value="4">其他</option>
+                <option value="4">其它</option>
             </select>
         </div>
     </div>
@@ -93,6 +93,7 @@
                 $("#amount").text(data.amount);
                 $("#accountMonth").text(data.accountMonth);
                 $("#address").text(data.address);
+                $(".weui-select").val(data.result);
                 $("#remark").text(data.remark);
                 if(status!='0'){
                     $("#result").attr("disabled","disabled");
