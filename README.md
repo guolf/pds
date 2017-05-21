@@ -18,7 +18,7 @@
 - MySQL5.5+
 - Tomcat7.0+
 - Maven3.0+
-
+- [fis3](http://fis.baidu.com/)
 
 
  **本地部署**
@@ -31,8 +31,11 @@
 - 项目访问路径：http://localhost
 - API文档路径：http://localhost/swagger-ui.html
 - 账号密码：admin/admin
- 
-**demo预览**
 
-- [http://182.106.129.91:8181/login.html](http://182.106.129.91:8181/login.html)
-- 测试账号：admin,密码admin
+ **前端构建**
+
+```
+cd src/main/resources/static
+fis3 release -d ../static
+
+```

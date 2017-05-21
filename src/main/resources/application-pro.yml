@@ -1,8 +1,10 @@
 spring:
+    resources:
+        static-locations: classpath:/dest/
     datasource:
-        url: jdbc:mysql://127.0.0.1:3306/jxtelecom?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        url: jdbc:mysql://localhost:3306/jxtelecom?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
         username: root
-        password: 123456
+        password: root
         #连接池的配置信息
         initialSize: 50
         minIdle: 50
